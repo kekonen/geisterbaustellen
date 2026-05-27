@@ -1,0 +1,4 @@
+baseURL = "https://geisterbaustellen.de/"
+locale = "de-de"
+title = "Berlins älteste offene Baustellen"
+disableKinds = ["taxonomy", "term", "RSS"]

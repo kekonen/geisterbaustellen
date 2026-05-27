@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Site.Title }}</title>
+<meta name="description" content="Live-Rangliste der ältesten offenen Baustellen Berlins.">
+<style>
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --accent: #a32a2a;
+  --muted: #555;
+  --rule: #ddd;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.55;
+}
+header, main, footer {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+header { padding-top: 2.5rem; padding-bottom: 0.5rem; }
+main { padding-bottom: 2rem; }
+footer { padding-top: 0.5rem; padding-bottom: 2.5rem; }
+h1 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-style: italic;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+}
+.leaderboard { list-style: none; margin: 0; padding: 0; }
+.entry {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.entry:last-child { border-bottom: none; }
+.rank {
+  font-size: 1.1rem;
+  color: var(--muted);
+  min-width: 3.2rem;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+.medal { font-style: normal; margin-right: 0.15rem; }
+.entry-body { flex: 1; min-width: 0; }
+.address {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.locality {
+  margin: 0.1rem 0 0.45rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.age {
+  margin: 0;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.note {
+  margin: 0.4rem 0 0;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.photo {
+  margin-top: 0.75rem;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer p { margin: 1.25rem 0; }
+footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+<h1>Berlins älteste offene Baustellen</h1>
+<p class="subtitle">Live-Rangliste.</p>
+</header>
+<main>
+<ol class="leaderboard">
+{{- range $i, $s := sort hugo.Data.sites.sites "start_date" "asc" }}
+<li class="entry">
+<span class="rank">{{ if eq $i 0 }}<span class="medal">🥇</span>{{ else if eq $i 1 }}<span class="medal">🥈</span>{{ else if eq $i 2 }}<span class="medal">🥉</span>{{ end }}{{ add $i 1 }}.</span>
+<div class="entry-body">
+<h2 class="address">{{ $s.address }}</h2>
+{{- with $s.postcode }}
+<p class="locality">{{ . }} Berlin</p>
+{{- end }}
+<p class="age" data-start-date="{{ $s.start_date }}">Beobachtet seit {{ $s.start_date }}.</p>
+{{- with $s.note }}
+<p class="note">{{ . }}</p>
+{{- end }}
+{{- with $s.photo }}
+<img class="photo" src="/photos/{{ . }}" alt="{{ $s.address }}" loading="lazy" width="400">
+{{- end }}
+</div>
+</li>
+{{- end }}
+</ol>
+</main>
+<footer>
+<p>Eine bessere Baustelle gefunden? <a href="mailto:kontakt@geisterbaustellen.de?subject=Neue%20Geisterbaustelle&amp;body=Adresse%3A%20%0AStartdatum%3A%20%0AFoto%3A%20%0AAnmerkung%3A%20">Hinweis senden</a>.</p>
+</footer>
+<script>
+(function () {
+  function diff(s) {
+    var a = new Date(s), n = new Date();
+    var y = n.getFullYear() - a.getFullYear();
+    var m = n.getMonth() - a.getMonth();
+    var d = n.getDate() - a.getDate();
+    if (d < 0) {
+      m -= 1;
+      d += new Date(n.getFullYear(), n.getMonth(), 0).getDate();
+    }
+    if (m < 0) { y -= 1; m += 12; }
+    return [y, m, d];
+  }
+  function p(n, sg, pl) { return n + " " + (n === 1 ? sg : pl); }
+  function render() {
+    var els = document.querySelectorAll(".age");
+    for (var i = 0; i < els.length; i++) {
+      var x = diff(els[i].dataset.startDate);
+      els[i].textContent = p(x[0], "Jahr", "Jahre") + ", " + p(x[1], "Monat", "Monate") + ", " + p(x[2], "Tag", "Tage");
+    }
+  }
+  render();
+  setInterval(render, 60000);
+})();
+</script>
+</body>
+</html>
