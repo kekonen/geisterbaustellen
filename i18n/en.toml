@@ -1,0 +1,38 @@
+[subtitle]
+other = "Live ranking."
+
+[observed_since]
+other = "Observed since"
+
+[footer_lead]
+other = "Found a better construction site?"
+
+[footer_link]
+other = "Send a tip"
+
+[city]
+other = "Berlin"
+
+[mail_subject_encoded]
+other = "New%20Geisterbaustelle"
+
+[mail_body_encoded]
+other = "Address%3A%20%0AStart%20date%3A%20%0APhoto%3A%20%0ANote%3A%20"
+
+[year_singular]
+other = "year"
+
+[year_plural]
+other = "years"
+
+[month_singular]
+other = "month"
+
+[month_plural]
+other = "months"
+
+[day_singular]
+other = "day"
+
+[day_plural]
+other = "days"

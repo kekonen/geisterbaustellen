@@ -2,18 +2,27 @@ sites:
   - address: "Littenstraße 79"
     postcode: "10179"
     start_date: "2019-04-01"
-    note: "Gegenüber dem Landgericht Berlin II."
+    note:
+      de: "Gegenüber dem Landgericht Berlin II."
+      en: "Across from Landgericht Berlin II."
+    photo: "littenstrasse-79.svg"
 
-  - address: "Karl-Marx-Allee 92"
-    postcode: "10243"
+  - address: "Karl-Marx-Straße 92"
+    postcode: "12043"
     start_date: "2017-09-15"
-    note: "Gerüst seit dem dritten Bauabschnitt."
+    note:
+      de: "Gerüst seit dem dritten Bauabschnitt."
+      en: "Scaffolding since the third construction phase."
+    photo: "karl-marx-strasse-92.svg"
 
   - address: "Schönhauser Allee 134"
     postcode: "10437"
     start_date: "2018-11-22"
-    note: "Container abgemeldet, Absperrung verbleibt."
+    note:
+      de: "Container abgemeldet, Absperrung verbleibt."
+      en: "Container deregistered, barrier remains."
 
   - address: "Hermannplatz 7"
     postcode: "10967"
     start_date: "2020-06-10"
+    photo: "hermannplatz-7.svg"

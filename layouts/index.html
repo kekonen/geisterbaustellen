@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="{{ .Site.Language.Lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ .Site.Title }}</title>
-<meta name="description" content="Live-Rangliste der ältesten offenen Baustellen Berlins.">
+<meta name="description" content="{{ i18n "subtitle" }}">
 <style>
 :root {
   --bg: #fff;
@@ -30,6 +30,12 @@ header, main, footer {
 header { padding-top: 2.5rem; padding-bottom: 0.5rem; }
 main { padding-bottom: 2rem; }
 footer { padding-top: 0.5rem; padding-bottom: 2.5rem; }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
 h1 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
@@ -37,6 +43,17 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.01em;
 }
+.lang-toggle { flex-shrink: 0; padding-top: 0.3rem; }
+.lang-toggle a {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  padding: 0.2rem 0.55rem;
+  letter-spacing: 0.06em;
+}
+.lang-toggle a:hover { color: var(--fg); border-color: var(--muted); }
 .subtitle {
   margin: 0 0 1rem;
   color: var(--muted);
@@ -103,23 +120,31 @@ footer a { color: var(--accent); }
 </head>
 <body>
 <header>
-<h1>Berlins älteste offene Baustellen</h1>
-<p class="subtitle">Live-Rangliste.</p>
+<div class="topbar">
+<h1>{{ .Site.Title }}</h1>
+<nav class="lang-toggle">
+{{- range .Translations -}}
+<a href="{{ .RelPermalink }}" hreflang="{{ .Lang }}">{{ upper .Lang }}</a>
+{{- end -}}
+</nav>
+</div>
+<p class="subtitle">{{ i18n "subtitle" }}</p>
 </header>
 <main>
 <ol class="leaderboard">
+{{- $lang := .Site.Language.Lang -}}
 {{- range $i, $s := sort hugo.Data.sites.sites "start_date" "asc" }}
 <li class="entry">
 <span class="rank">{{ if eq $i 0 }}<span class="medal">🥇</span>{{ else if eq $i 1 }}<span class="medal">🥈</span>{{ else if eq $i 2 }}<span class="medal">🥉</span>{{ end }}{{ add $i 1 }}.</span>
 <div class="entry-body">
 <h2 class="address">{{ $s.address }}</h2>
 {{- with $s.postcode }}
-<p class="locality">{{ . }} Berlin</p>
+<p class="locality">{{ . }} {{ i18n "city" }}</p>
 {{- end }}
-<p class="age" data-start-date="{{ $s.start_date }}">Beobachtet seit {{ $s.start_date }}.</p>
-{{- with $s.note }}
+<p class="age" data-start-date="{{ $s.start_date }}">{{ i18n "observed_since" }} {{ $s.start_date }}.</p>
+{{- with $s.note }}{{ with index . $lang }}
 <p class="note">{{ . }}</p>
-{{- end }}
+{{- end }}{{ end }}
 {{- with $s.photo }}
 <img class="photo" src="/photos/{{ . }}" alt="{{ $s.address }}" loading="lazy" width="400">
 {{- end }}
@@ -129,19 +154,17 @@ footer a { color: var(--accent); }
 </ol>
 </main>
 <footer>
-<p>Eine bessere Baustelle gefunden? <a href="mailto:kontakt@geisterbaustellen.de?subject=Neue%20Geisterbaustelle&amp;body=Adresse%3A%20%0AStartdatum%3A%20%0AFoto%3A%20%0AAnmerkung%3A%20">Hinweis senden</a>.</p>
+<p>{{ i18n "footer_lead" }} <a href="{{ printf "mailto:kontakt@geisterbaustellen.de?subject=%s&body=%s" (i18n "mail_subject_encoded") (i18n "mail_body_encoded") | safeURL }}">{{ i18n "footer_link" }}</a>.</p>
 </footer>
 <script>
+var L = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}",m1:"{{ i18n "month_singular" }}",mN:"{{ i18n "month_plural" }}",d1:"{{ i18n "day_singular" }}",dN:"{{ i18n "day_plural" }}"};
 (function () {
   function diff(s) {
     var a = new Date(s), n = new Date();
     var y = n.getFullYear() - a.getFullYear();
     var m = n.getMonth() - a.getMonth();
     var d = n.getDate() - a.getDate();
-    if (d < 0) {
-      m -= 1;
-      d += new Date(n.getFullYear(), n.getMonth(), 0).getDate();
-    }
+    if (d < 0) { m -= 1; d += new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
     if (m < 0) { y -= 1; m += 12; }
     return [y, m, d];
   }
@@ -150,7 +173,7 @@ footer a { color: var(--accent); }
     var els = document.querySelectorAll(".age");
     for (var i = 0; i < els.length; i++) {
       var x = diff(els[i].dataset.startDate);
-      els[i].textContent = p(x[0], "Jahr", "Jahre") + ", " + p(x[1], "Monat", "Monate") + ", " + p(x[2], "Tag", "Tage");
+      els[i].textContent = p(x[0], L.y1, L.yN) + ", " + p(x[1], L.m1, L.mN) + ", " + p(x[2], L.d1, L.dN);
     }
   }
   render();

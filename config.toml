@@ -1,4 +1,14 @@
 baseURL = "https://geisterbaustellen.de/"
-locale = "de-de"
-title = "Berlins älteste offene Baustellen"
+defaultContentLanguage = "de"
+defaultContentLanguageInSubdir = false
 disableKinds = ["taxonomy", "term", "RSS"]
+
+[languages]
+  [languages.de]
+    locale = "de-DE"
+    title = "Berlins älteste offene Baustellen"
+    weight = 1
+  [languages.en]
+    locale = "en-GB"
+    title = "Berlin's oldest open construction sites"
+    weight = 2

@@ -1,0 +1,38 @@
+[subtitle]
+other = "Live-Rangliste."
+
+[observed_since]
+other = "Beobachtet seit"
+
+[footer_lead]
+other = "Eine bessere Baustelle gefunden?"
+
+[footer_link]
+other = "Hinweis senden"
+
+[city]
+other = "Berlin"
+
+[mail_subject_encoded]
+other = "Neue%20Geisterbaustelle"
+
+[mail_body_encoded]
+other = "Adresse%3A%20%0AStartdatum%3A%20%0AFoto%3A%20%0AAnmerkung%3A%20"
+
+[year_singular]
+other = "Jahr"
+
+[year_plural]
+other = "Jahre"
+
+[month_singular]
+other = "Monat"
+
+[month_plural]
+other = "Monate"
+
+[day_singular]
+other = "Tag"
+
+[day_plural]
+other = "Tage"
