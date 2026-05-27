@@ -10,7 +10,10 @@
 <p class="note">{{ . }}</p>
 {{- end }}
 {{- with .Params.photo }}
+<figure class="photo-wrap">
 <img class="photo" src="/photos/{{ . }}" alt="{{ $.Title }}" loading="lazy">
+<span class="live-badge" aria-hidden="true"><span class="live-dot"></span>LIVE</span>
+</figure>
 {{- end }}
 {{- with .Content }}
 <div class="entry-content">{{ . }}</div>
