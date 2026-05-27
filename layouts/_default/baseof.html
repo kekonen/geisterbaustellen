@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ i18n "subtitle" }}">
+<style>
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --accent: #a32a2a;
+  --muted: #555;
+  --rule: #ddd;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.55;
+}
+header, main, footer {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+header { padding-top: 2.5rem; padding-bottom: 0.5rem; }
+main { padding-bottom: 2rem; }
+footer { padding-top: 0.5rem; padding-bottom: 2.5rem; }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+h1 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+h1 a { color: inherit; text-decoration: none; }
+.lang-toggle { flex-shrink: 0; padding-top: 0.3rem; }
+.lang-toggle a {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  padding: 0.2rem 0.55rem;
+  letter-spacing: 0.06em;
+}
+.lang-toggle a:hover { color: var(--fg); border-color: var(--muted); }
+.subtitle {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-style: italic;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+}
+.leaderboard { list-style: none; margin: 0; padding: 0; }
+.entry {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.entry:last-child { border-bottom: none; }
+.rank {
+  font-size: 1.1rem;
+  color: var(--muted);
+  min-width: 3.2rem;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+.medal { font-style: normal; margin-right: 0.15rem; }
+.entry-body { flex: 1; min-width: 0; }
+.address {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.address a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.address a:hover { border-bottom-color: var(--accent); }
+.locality {
+  margin: 0.1rem 0 0.45rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.age {
+  margin: 0;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.note {
+  margin: 0.4rem 0 0;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.photo {
+  margin-top: 0.75rem;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.entry-detail { padding: 1.5rem 0 0; }
+.entry-detail .address { font-size: 1.55rem; }
+.entry-detail .locality { font-size: 1rem; }
+.entry-detail .note { font-size: 1rem; margin-top: 0.6rem; }
+.entry-detail .photo { margin-top: 1rem; width: 100%; }
+.entry-content { margin-top: 1.5rem; }
+.entry-content p { margin: 0.8rem 0; }
+.back-link { margin: 2rem 0 0; font-size: 0.9rem; }
+.back-link a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+.back-link a:hover { color: var(--fg); border-color: var(--muted); }
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer p { margin: 1.25rem 0; }
+footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+<div class="topbar">
+<h1><a href="{{ "/" | relLangURL }}">{{ .Site.Title }}</a></h1>
+<nav class="lang-toggle">
+{{- range .Translations -}}
+<a href="{{ .RelPermalink }}" hreflang="{{ .Lang }}">{{ upper .Lang }}</a>
+{{- end -}}
+</nav>
+</div>
+<p class="subtitle">{{ i18n "subtitle" }}</p>
+</header>
+<main>
+{{ block "main" . }}{{ end }}
+</main>
+<footer>
+<p>{{ i18n "footer_lead" }} <a href="{{ printf "mailto:kontakt@geisterbaustellen.de?subject=%s&body=%s" (i18n "mail_subject_encoded") (i18n "mail_body_encoded") | safeURL }}">{{ i18n "footer_link" }}</a>.</p>
+</footer>
+<script>
+var L = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}",m1:"{{ i18n "month_singular" }}",mN:"{{ i18n "month_plural" }}",d1:"{{ i18n "day_singular" }}",dN:"{{ i18n "day_plural" }}"};
+(function () {
+  function diff(s) {
+    var a = new Date(s), n = new Date();
+    var y = n.getFullYear() - a.getFullYear();
+    var m = n.getMonth() - a.getMonth();
+    var d = n.getDate() - a.getDate();
+    if (d < 0) { m -= 1; d += new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
+    if (m < 0) { y -= 1; m += 12; }
+    return [y, m, d];
+  }
+  function p(n, sg, pl) { return n + " " + (n === 1 ? sg : pl); }
+  function render() {
+    var els = document.querySelectorAll(".age");
+    for (var i = 0; i < els.length; i++) {
+      var x = diff(els[i].dataset.startDate);
+      els[i].textContent = p(x[0], L.y1, L.yN) + ", " + p(x[1], L.m1, L.mN) + ", " + p(x[2], L.d1, L.dN);
+    }
+  }
+  render();
+  setInterval(render, 60000);
+})();
+</script>
+</body>
+</html>

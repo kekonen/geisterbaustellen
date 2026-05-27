@@ -10,6 +10,9 @@ other = "Found a better construction site?"
 [footer_link]
 other = "Send a tip"
 
+[back_to_list]
+other = "Back to list"
+
 [city]
 other = "Berlin"
 

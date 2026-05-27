@@ -1,0 +1,20 @@
+{{ define "title" }}{{ .Title }} — {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<article class="entry-detail">
+<h2 class="address">{{ .Title }}</h2>
+{{- with .Params.postcode }}
+<p class="locality">{{ . }} {{ i18n "city" }}</p>
+{{- end }}
+<p class="age" data-start-date="{{ .Params.start_date }}">{{ i18n "observed_since" }} {{ .Params.start_date }}.</p>
+{{- with .Params.note }}
+<p class="note">{{ . }}</p>
+{{- end }}
+{{- with .Params.photo }}
+<img class="photo" src="/photos/{{ . }}" alt="{{ $.Title }}" loading="lazy">
+{{- end }}
+{{- with .Content }}
+<div class="entry-content">{{ . }}</div>
+{{- end }}
+</article>
+<p class="back-link"><a href="{{ "/" | relLangURL }}">← {{ i18n "back_to_list" }}</a></p>
+{{ end }}

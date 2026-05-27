@@ -10,6 +10,9 @@ other = "Eine bessere Baustelle gefunden?"
 [footer_link]
 other = "Hinweis senden"
 
+[back_to_list]
+other = "Zurück zur Liste"
+
 [city]
 other = "Berlin"
 
