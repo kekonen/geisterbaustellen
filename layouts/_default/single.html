@@ -5,14 +5,17 @@
 {{- with .Params.postcode }}
 <p class="locality">{{ . }} {{ i18n "city" }}</p>
 {{- end }}
-<p class="age" data-start-date="{{ .Params.start_date }}">{{ i18n "observed_since" }} {{ .Params.start_date }}.</p>
+<p class="age" data-start-date="{{ .Params.start_date }}"{{ with .Params.ended_date }} data-end-date="{{ . }}"{{ end }}>{{ i18n "observed_since" }} {{ .Params.start_date }}.</p>
+{{- with .Params.ended_date }}
+<p class="death">† {{ i18n "deceased_on" }} {{ . }}.</p>
+{{- end }}
 {{- with .Params.note }}
 <p class="note">{{ . }}</p>
 {{- end }}
 {{- with .Params.photo }}
 <figure class="photo-wrap">
 <img class="photo" src="/photos/{{ . }}" alt="{{ $.Title }}" loading="lazy">
-<span class="live-badge" aria-hidden="true"><span class="live-dot"></span>LIVE</span>
+<span class="live-badge" aria-hidden="true">{{ if $.Params.ended_date }}ARCHIV{{ else }}<span class="live-dot"></span>LIVE{{ end }}</span>
 </figure>
 {{- end }}
 {{- with .Content }}

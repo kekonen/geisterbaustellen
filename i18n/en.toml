@@ -4,6 +4,9 @@ other = "Live ranking."
 [observed_since]
 other = "Observed since"
 
+[deceased_on]
+other = "deceased on"
+
 [footer_lead]
 other = "Found a better construction site?"
 

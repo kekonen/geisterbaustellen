@@ -4,6 +4,9 @@ other = "Live-Rangliste."
 [observed_since]
 other = "Beobachtet seit"
 
+[deceased_on]
+other = "verstorben am"
+
 [footer_lead]
 other = "Eine bessere Baustelle gefunden?"
 

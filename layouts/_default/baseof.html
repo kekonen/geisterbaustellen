@@ -103,6 +103,13 @@ h1 a { color: inherit; text-decoration: none; }
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
+.death {
+  margin: 0.1rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+}
 .note {
   margin: 0.4rem 0 0;
   font-style: italic;
@@ -223,8 +230,8 @@ window.GBLabels = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}"
 window.GBRenderAges = function () {
   var lab = window.GBLabels;
   var els = document.querySelectorAll(".age");
-  function diff(s) {
-    var a = new Date(s), n = new Date();
+  function diff(s, e) {
+    var a = new Date(s), n = e ? new Date(e) : new Date();
     var y = n.getFullYear() - a.getFullYear();
     var m = n.getMonth() - a.getMonth();
     var d = n.getDate() - a.getDate();
@@ -234,7 +241,7 @@ window.GBRenderAges = function () {
   }
   function p(n, sg, pl) { return n + " " + (n === 1 ? sg : pl); }
   for (var i = 0; i < els.length; i++) {
-    var x = diff(els[i].dataset.startDate);
+    var x = diff(els[i].dataset.startDate, els[i].dataset.endDate);
     els[i].textContent = p(x[0], lab.y1, lab.yN) + ", " + p(x[1], lab.m1, lab.mN) + ", " + p(x[2], lab.d1, lab.dN);
   }
 };
