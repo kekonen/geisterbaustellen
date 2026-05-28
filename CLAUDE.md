@@ -60,7 +60,7 @@ That is the entire site. Do not add:
 - Contact page beyond the mailto
 - Personal byline, social links, "made by"
 - Submission form, login, accounts
-- Map view, filter by Bezirk, search
+- Filter by Bezirk, search
 - Tag pages, categories, RSS
 - Cookie banner (no cookies are set)
 

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ i18n "subtitle" }}">
+{{ block "head" . }}{{ end }}
 <style>
 :root {
   --bg: #fff;
@@ -152,6 +153,18 @@ footer {
 }
 footer p { margin: 1.25rem 0; }
 footer a { color: var(--accent); }
+.berlin-map { height: 320px; margin: 0 0 1.5rem; border: 1px solid var(--rule); }
+@media (max-width: 480px) { .berlin-map { height: 240px; } }
+.berlin-map .leaflet-popup-content-wrapper { border-radius: 0; font-family: Georgia, "Times New Roman", serif; box-shadow: 0 1px 6px rgba(0,0,0,0.2); }
+.berlin-map .leaflet-popup-tip { box-shadow: 0 1px 6px rgba(0,0,0,0.2); }
+.berlin-map .leaflet-popup-content { margin: 0.7rem 0.9rem; font-size: 0.9rem; line-height: 1.4; }
+.map-popup-title { display: block; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 600; color: var(--fg); text-decoration: none; margin-bottom: 0.15rem; }
+.map-popup-title:hover { color: var(--accent); }
+.berlin-map .leaflet-popup-content .age { display: block; color: var(--accent); font-variant-numeric: tabular-nums; font-size: 0.85rem; margin: 0 0 0.4rem; }
+.map-popup-link { font-size: 0.85rem; color: var(--accent); text-decoration: none; }
+.map-popup-link:hover { text-decoration: underline; }
+.berlin-map .leaflet-control-attribution { font-size: 0.7rem; }
+.berlin-map .leaflet-control-attribution a { color: var(--muted); }
 </style>
 </head>
 <body>
@@ -173,8 +186,10 @@ footer a { color: var(--accent); }
 <p>{{ i18n "footer_lead" }} <a href="{{ printf "mailto:kontakt@geisterbaustellen.de?subject=%s&body=%s" (i18n "mail_subject_encoded") (i18n "mail_body_encoded") | safeURL }}">{{ i18n "footer_link" }}</a>.</p>
 </footer>
 <script>
-var L = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}",m1:"{{ i18n "month_singular" }}",mN:"{{ i18n "month_plural" }}",d1:"{{ i18n "day_singular" }}",dN:"{{ i18n "day_plural" }}"};
-(function () {
+window.GBLabels = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}",m1:"{{ i18n "month_singular" }}",mN:"{{ i18n "month_plural" }}",d1:"{{ i18n "day_singular" }}",dN:"{{ i18n "day_plural" }}"};
+window.GBRenderAges = function () {
+  var lab = window.GBLabels;
+  var els = document.querySelectorAll(".age");
   function diff(s) {
     var a = new Date(s), n = new Date();
     var y = n.getFullYear() - a.getFullYear();
@@ -185,16 +200,14 @@ var L = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}",m1:"{{ i1
     return [y, m, d];
   }
   function p(n, sg, pl) { return n + " " + (n === 1 ? sg : pl); }
-  function render() {
-    var els = document.querySelectorAll(".age");
-    for (var i = 0; i < els.length; i++) {
-      var x = diff(els[i].dataset.startDate);
-      els[i].textContent = p(x[0], L.y1, L.yN) + ", " + p(x[1], L.m1, L.mN) + ", " + p(x[2], L.d1, L.dN);
-    }
+  for (var i = 0; i < els.length; i++) {
+    var x = diff(els[i].dataset.startDate);
+    els[i].textContent = p(x[0], lab.y1, lab.yN) + ", " + p(x[1], lab.m1, lab.mN) + ", " + p(x[2], lab.d1, lab.dN);
   }
-  render();
-  setInterval(render, 60000);
-})();
+};
+window.GBRenderAges();
+setInterval(window.GBRenderAges, 60000);
 </script>
+{{ block "scripts" . }}{{ end }}
 </body>
 </html>

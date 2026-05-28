@@ -1,4 +1,10 @@
+{{ define "head" }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+{{ end }}
+
 {{ define "main" }}
+<div id="berlin-map" class="berlin-map" role="region" aria-label="Berlin"></div>
+
 <ol class="leaderboard">
 {{- range $i, $p := sort .Site.RegularPages "Params.start_date" "asc" }}
 <li class="entry">
@@ -22,4 +28,62 @@
 </li>
 {{- end }}
 </ol>
+{{ end }}
+
+{{ define "scripts" }}
+{{- $pins := slice -}}
+{{- range $p := .Site.RegularPages -}}
+  {{- if and $p.Params.lat $p.Params.lon -}}
+    {{- $pins = $pins | append (dict
+        "title" $p.Title
+        "lat" $p.Params.lat
+        "lon" $p.Params.lon
+        "startDate" $p.Params.start_date
+        "url" $p.RelPermalink
+        "fallback" (printf "%s %s." (i18n "observed_since") $p.Params.start_date)) -}}
+  {{- end -}}
+{{- end -}}
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var pins = {{ $pins | jsonify | safeJS }};
+  var linkLabel = "{{ i18n "back_to_list" | default "Zum Eintrag" }}";
+  var entryLabel = {{ if eq .Site.Language.Lang "de" }}"Zum Eintrag →"{{ else }}"View entry →"{{ end }};
+  var el = document.getElementById("berlin-map");
+  if (!el || typeof L === "undefined") return;
+
+  var map = L.map(el, { scrollWheelZoom: false, zoomControl: true });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  var group = [];
+  pins.forEach(function (p) {
+    var m = L.circleMarker([p.lat, p.lon], {
+      radius: 8, fillColor: "#a32a2a", color: "#fff", weight: 2, opacity: 1, fillOpacity: 1
+    });
+    var html =
+      '<a class="map-popup-title" href="' + esc(p.url) + '">' + esc(p.title) + '</a>' +
+      '<span class="age" data-start-date="' + esc(p.startDate) + '">' + esc(p.fallback) + '</span>' +
+      '<a class="map-popup-link" href="' + esc(p.url) + '">' + esc(entryLabel) + '</a>';
+    m.bindPopup(html, { closeButton: false, autoPan: true });
+    m.on("popupopen", function () { if (window.GBRenderAges) window.GBRenderAges(); });
+    m.addTo(map);
+    group.push(m);
+  });
+
+  if (group.length) {
+    map.fitBounds(L.featureGroup(group).getBounds().pad(0.25));
+  } else {
+    map.setView([52.52, 13.405], 11);
+  }
+})();
+</script>
 {{ end }}
