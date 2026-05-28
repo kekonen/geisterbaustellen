@@ -19,5 +19,145 @@
 <div class="entry-content">{{ . }}</div>
 {{- end }}
 </article>
+
+<section class="petition"
+         data-slug="{{ .File.TranslationBaseName }}"
+         data-singular="{{ i18n "petition_count_singular" }}"
+         data-plural="{{ i18n "petition_count_plural" }}"
+         data-signed-label="{{ i18n "petition_signed_button" }}"
+         data-thanks-label="{{ i18n "petition_thanks" }}"
+         data-error-label="{{ i18n "petition_error" }}">
+<h3 class="petition-title">{{ i18n "petition_title" }}</h3>
+<p class="petition-rationale">{{ i18n "petition_rationale" }}</p>
+<p class="petition-count">
+<span class="petition-number" data-count>—</span>
+<span class="petition-noun">{{ i18n "petition_count_plural" }}</span>
+</p>
+<button type="button" class="petition-button">{{ i18n "petition_sign_button" }}</button>
+<p class="petition-thanks" hidden></p>
+</section>
+
+<div class="captcha-modal" hidden role="dialog" aria-modal="true" aria-labelledby="captcha-title">
+<div class="captcha-dialog">
+<h4 id="captcha-title" class="captcha-title">{{ i18n "captcha_title" }}</h4>
+<p class="captcha-instruction">{{ i18n "captcha_instruction" }}</p>
+<div class="captcha-grid">
+{{- range (slice "01-crane" "02-excavator" "03-mixer" "04-hardhat" "05-cone" "06-fence" "07-bake" "08-sand" "09-sign") }}
+<button type="button" class="captcha-cell" aria-pressed="false"><img src="/svg/captcha/{{ . }}.svg" alt="" loading="lazy"></button>
+{{- end }}
+</div>
+<p class="captcha-error" role="alert" aria-live="polite"></p>
+<div class="captcha-actions">
+<button type="button" class="captcha-cancel">{{ i18n "captcha_cancel" }}</button>
+<button type="button" class="captcha-confirm">{{ i18n "captcha_confirm" }}</button>
+</div>
+</div>
+</div>
+
 <p class="back-link"><a href="{{ "/" | relLangURL }}">← {{ i18n "back_to_list" }}</a></p>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+(function () {
+  var section = document.querySelector(".petition");
+  if (!section) return;
+  var slug = section.dataset.slug;
+  var btn = section.querySelector(".petition-button");
+  var num = section.querySelector("[data-count]");
+  var noun = section.querySelector(".petition-noun");
+  var thanksEl = section.querySelector(".petition-thanks");
+  var singular = section.dataset.singular;
+  var plural = section.dataset.plural;
+  var signedLabel = section.dataset.signedLabel;
+  var thanksLabel = section.dataset.thanksLabel;
+  var errorLabel = section.dataset.errorLabel;
+
+  var modal = document.querySelector(".captcha-modal");
+  var dialog = modal.querySelector(".captcha-dialog");
+  var grid = modal.querySelector(".captcha-grid");
+  var confirmBtn = modal.querySelector(".captcha-confirm");
+  var cancelBtn = modal.querySelector(".captcha-cancel");
+  var errorEl = modal.querySelector(".captcha-error");
+
+  var locale = document.documentElement.lang === "de" ? "de-DE" : "en-GB";
+  var token = null;
+
+  function setCount(n) {
+    num.textContent = n.toLocaleString(locale);
+    noun.textContent = n === 1 ? singular : plural;
+  }
+
+  function loadCount() {
+    fetch("/api/petition/" + encodeURIComponent(slug))
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) { setCount(d.count || 0); })
+      .catch(function (e) { console.warn("[petition] count load failed:", e.message || e); num.textContent = "—"; });
+  }
+
+  function openModal() {
+    if (btn.disabled) return;
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    errorEl.textContent = "";
+    grid.querySelectorAll(".captcha-cell").forEach(function (c) {
+      c.classList.remove("selected");
+      c.setAttribute("aria-pressed", "false");
+    });
+    confirmBtn.disabled = true;
+    token = null;
+    fetch("/api/captcha")
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) { token = d.token; confirmBtn.disabled = false; })
+      .catch(function (e) { console.warn("[petition] captcha failed:", e.message || e); errorEl.textContent = errorLabel; });
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    token = null;
+  }
+
+  grid.addEventListener("click", function (e) {
+    var cell = e.target.closest(".captcha-cell");
+    if (!cell) return;
+    var selected = cell.classList.toggle("selected");
+    cell.setAttribute("aria-pressed", selected ? "true" : "false");
+  });
+
+  btn.addEventListener("click", openModal);
+  cancelBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", function (e) { if (!modal.hidden && e.key === "Escape") closeModal(); });
+
+  confirmBtn.addEventListener("click", function () {
+    if (!token) return;
+    confirmBtn.disabled = true;
+    cancelBtn.disabled = true;
+    errorEl.textContent = "";
+    fetch("/api/petition/" + encodeURIComponent(slug) + "/sign", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token: token })
+    })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) {
+        setCount(d.count || 0);
+        closeModal();
+        btn.textContent = signedLabel;
+        btn.disabled = true;
+        thanksEl.textContent = thanksLabel;
+        thanksEl.hidden = false;
+      })
+      .catch(function (e) {
+        console.warn("[petition] sign failed:", e.message || e);
+        errorEl.textContent = errorLabel;
+        confirmBtn.disabled = false;
+        cancelBtn.disabled = false;
+      });
+  });
+
+  loadCount();
+})();
+</script>
 {{ end }}

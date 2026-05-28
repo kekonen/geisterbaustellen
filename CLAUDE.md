@@ -64,6 +64,8 @@ That is the entire site. Do not add:
 - Tag pages, categories, RSS
 - Cookie banner (no cookies are set)
 
+**Exception — per-entry petition counter.** Each detail page has a "Petition: Diese Baustelle muss bleiben" section with a counter ("Unterschriften") behind a parody image-grid CAPTCHA (every tile is a construction site; any answer passes). Counter is stored in a Cloudflare KV namespace (`PETITIONS`) via Pages Functions under `functions/api/petition/*`. One-time CAPTCHA tokens live in the same KV with a 5-minute TTL. See README for setup.
+
 If a requested feature feels like it's making the site into a "real product," push back before implementing.
 
 ## Design and tone

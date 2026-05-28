@@ -39,3 +39,39 @@ other = "Tag"
 
 [day_plural]
 other = "Tage"
+
+[petition_title]
+other = "Petition: Diese Baustelle muss bleiben."
+
+[petition_rationale]
+other = "Berlin ohne offene Baustellen wäre nicht mehr Berlin. Bürgereinwand gegen jede vorzeitige Fertigstellung."
+
+[petition_count_singular]
+other = "Unterschrift"
+
+[petition_count_plural]
+other = "Unterschriften"
+
+[petition_sign_button]
+other = "Unterschreiben"
+
+[petition_signed_button]
+other = "Bereits unterschrieben"
+
+[petition_thanks]
+other = "Vermerkt. Bürgereinwand registriert."
+
+[petition_error]
+other = "Vorgang fehlgeschlagen. Bitte erneut versuchen."
+
+[captcha_title]
+other = "Sicherheitsabfrage"
+
+[captcha_instruction]
+other = "Wählen Sie alle Bilder, die eine Baustelle zeigen."
+
+[captcha_confirm]
+other = "Bestätigen"
+
+[captcha_cancel]
+other = "Abbrechen"

@@ -39,3 +39,39 @@ other = "day"
 
 [day_plural]
 other = "days"
+
+[petition_title]
+other = "Petition: This construction site must stay."
+
+[petition_rationale]
+other = "Berlin without open construction sites would no longer be Berlin. Citizen objection against any premature completion."
+
+[petition_count_singular]
+other = "signature"
+
+[petition_count_plural]
+other = "signatures"
+
+[petition_sign_button]
+other = "Sign"
+
+[petition_signed_button]
+other = "Already signed"
+
+[petition_thanks]
+other = "Noted. Citizen objection recorded."
+
+[petition_error]
+other = "Submission failed. Please try again."
+
+[captcha_title]
+other = "Security check"
+
+[captcha_instruction]
+other = "Select all images showing a construction site."
+
+[captcha_confirm]
+other = "Confirm"
+
+[captcha_cancel]
+other = "Cancel"

@@ -3,5 +3,9 @@ public/
 resources/_gen/
 .hugo_build.lock
 
+# Cloudflare Workers / wrangler
+.wrangler/
+node_modules/
+
 # OS
 .DS_Store
