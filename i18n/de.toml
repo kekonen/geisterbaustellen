@@ -7,6 +7,9 @@ other = "Beobachtet seit"
 [deceased_on]
 other = "verstorben am"
 
+[assembly_on]
+other = "Aufbau am"
+
 [footer_lead]
 other = "Eine bessere Baustelle gefunden?"
 

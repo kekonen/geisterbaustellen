@@ -7,6 +7,9 @@ other = "Observed since"
 [deceased_on]
 other = "deceased on"
 
+[assembly_on]
+other = "Assembly on"
+
 [footer_lead]
 other = "Found a better construction site?"
 

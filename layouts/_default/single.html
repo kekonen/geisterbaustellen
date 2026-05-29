@@ -5,6 +5,9 @@
 {{- with .Params.postcode }}
 <p class="locality">{{ . }} {{ i18n "city" }}</p>
 {{- end }}
+{{- with .Params.assembly_date }}
+<p class="assembly">{{ i18n "assembly_on" }} {{ . }}.</p>
+{{- end }}
 <p class="age" data-start-date="{{ .Params.start_date }}"{{ with .Params.ended_date }} data-end-date="{{ . }}"{{ end }}>{{ i18n "observed_since" }} {{ .Params.start_date }}.</p>
 {{- with .Params.ended_date }}
 <p class="death">† {{ i18n "deceased_on" }} {{ . }}.</p>
