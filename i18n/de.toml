@@ -67,6 +67,15 @@ other = "Bereits unterschrieben"
 [petition_thanks]
 other = "Vermerkt. Bürgereinwand registriert."
 
+[petition_title_dead]
+other = "Petition: Diese Baustelle wiedererrichten."
+
+[petition_rationale_dead]
+other = "Berlin verliert mit jeder vollendeten Baustelle ein Stück seiner Identität. Bürgereinwand fordert die Wiedererrichtung der Absperrung."
+
+[petition_thanks_dead]
+other = "Vermerkt. Antrag auf Wiedererrichtung registriert."
+
 [petition_error]
 other = "Vorgang fehlgeschlagen. Bitte erneut versuchen."
 

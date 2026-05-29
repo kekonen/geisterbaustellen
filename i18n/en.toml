@@ -67,6 +67,15 @@ other = "Already signed"
 [petition_thanks]
 other = "Noted. Citizen objection recorded."
 
+[petition_title_dead]
+other = "Petition: Re-erect this construction site."
+
+[petition_rationale_dead]
+other = "With every completed construction site Berlin loses a piece of its identity. Citizen objection demands the re-erection of the barrier."
+
+[petition_thanks_dead]
+other = "Noted. Application for re-erection recorded."
+
 [petition_error]
 other = "Submission failed. Please try again."
 

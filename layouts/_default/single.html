@@ -26,15 +26,16 @@
 {{- end }}
 </article>
 
+{{ $petSfx := "" }}{{ if .Params.ended_date }}{{ $petSfx = "_dead" }}{{ end }}
 <section class="petition"
          data-slug="{{ .File.TranslationBaseName }}"
          data-singular="{{ i18n "petition_count_singular" }}"
          data-plural="{{ i18n "petition_count_plural" }}"
          data-signed-label="{{ i18n "petition_signed_button" }}"
-         data-thanks-label="{{ i18n "petition_thanks" }}"
+         data-thanks-label="{{ i18n (print "petition_thanks" $petSfx) }}"
          data-error-label="{{ i18n "petition_error" }}">
-<h3 class="petition-title">{{ i18n "petition_title" }}</h3>
-<p class="petition-rationale">{{ i18n "petition_rationale" }}</p>
+<h3 class="petition-title">{{ i18n (print "petition_title" $petSfx) }}</h3>
+<p class="petition-rationale">{{ i18n (print "petition_rationale" $petSfx) }}</p>
 <p class="petition-count">
 <span class="petition-number" data-count>—</span>
 <span class="petition-noun">{{ i18n "petition_count_plural" }}</span>
