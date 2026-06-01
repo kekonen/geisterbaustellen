@@ -1,25 +1,27 @@
 # geisterbaustellen.de
 
-Satirische Live-Rangliste der ältesten offenen Baustellen Berlins. Single-Page-Site, deployt automatisch auf Push nach `main` (Cloudflare Pages, Hugo extended).
+Satirische Live-Rangliste der ältesten offenen Baustellen Berlins. Hugo, Cloudflare Pages, Vanilla JS.
 
 ## Neuen Eintrag hinzufügen
 
-1. Markdown-Datei in `content/` anlegen (`<slug>.md` für Deutsch, `<slug>.en.md` für Englisch). Frontmatter: `title`, optional `postcode`, `start_date` im ISO-Format (`YYYY-MM-DD`), optional `note`, optional `photo` (Dateiname), `lat`, `lon`.
-2. Optionales Foto in `static/photos/` ablegen.
-3. Committen, auf `main` pushen — Cloudflare baut in ca. 30 Sekunden neu.
+1. Markdown-Datei in `content/` anlegen (`<slug>.md` für Deutsch, `<slug>.en.md` für Englisch).
+2. Frontmatter pflegen: `title`, `postcode`, `start_date`, optional `ended_date`, `assembly_date`, `note`, `photo`, `lat`, `lon`, `source_url`, `source_note`.
+3. Optionales Foto in `static/photos/` ablegen.
+4. Committen, auf `main` pushen.
+5. Cloudflare baut neu.
 
 ## Lokal bauen
 
-`hugo server` für Entwicklung, `hugo --minify` für den Produktions-Build (Ausgabe in `public/`).
+`hugo server` für Entwicklung. `hugo --minify` für den Produktions-Build.
 
-## Petitions-Zähler (Cloudflare Pages Functions + KV)
+## Petitions-Zähler
 
-Jeder Eintrag hat eine Petition (`/api/petition/<slug>`). Gespeichert wird in einem KV-Namespace mit dem Binding-Namen `PETITIONS`.
+Pages Functions unter `/api/petition/<slug>` verwenden das KV-Binding `PETITIONS`.
 
-Einmaliges Setup:
+Einmalig:
 
-1. KV-Namespace anlegen: `npx wrangler kv namespace create PETITIONS` (oder im Cloudflare-Dashboard).
-2. Die zurückgegebene ID in `wrangler.toml` unter `[[kv_namespaces]] id = "…"` eintragen.
-3. Im Pages-Projekt unter *Settings → Functions → KV namespace bindings* das Binding `PETITIONS` auf denselben Namespace setzen (oder via `wrangler.toml` deployen).
+1. `npx wrangler kv namespace create PETITIONS`
+2. Die ID in `wrangler.toml` eintragen.
+3. Im Pages-Projekt das KV-Binding `PETITIONS` setzen.
 
-Lokales Testen der Functions (statt `hugo server`): `hugo --minify && npx wrangler pages dev public`.
+Lokal mit Functions: `hugo --minify && npx wrangler pages dev public`.

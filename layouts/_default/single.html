@@ -24,6 +24,11 @@
 {{- with .Content }}
 <div class="entry-content">{{ . }}</div>
 {{- end }}
+{{- if or .Params.source_url .Params.source_note }}
+<p class="source-note">
+{{ i18n "source_label" }}{{ with .Params.source_url }} <a href="{{ . }}">{{ i18n "source_link" }}</a>{{ end }}{{ with .Params.source_note }} {{ . }}{{ end }}
+</p>
+{{- end }}
 </article>
 
 {{ $petSfx := "" }}{{ if .Params.ended_date }}{{ $petSfx = "_dead" }}{{ end }}
@@ -81,7 +86,6 @@
   var errorLabel = section.dataset.errorLabel;
 
   var modal = document.querySelector(".captcha-modal");
-  var dialog = modal.querySelector(".captcha-dialog");
   var grid = modal.querySelector(".captcha-grid");
   var confirmBtn = modal.querySelector(".captcha-confirm");
   var cancelBtn = modal.querySelector(".captcha-cancel");
@@ -112,6 +116,7 @@
       c.setAttribute("aria-pressed", "false");
     });
     confirmBtn.disabled = true;
+    cancelBtn.disabled = false;
     token = null;
     fetch("/api/captcha")
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })

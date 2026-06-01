@@ -152,6 +152,8 @@ figure { margin: 0; }
 .entry-detail .photo { width: 100%; }
 .entry-content { margin-top: 1.5rem; }
 .entry-content p { margin: 0.8rem 0; }
+.source-note { margin: 0.8rem 0 0; color: var(--muted); font-size: 0.82rem; }
+.source-note a { color: var(--accent); }
 .assembly { margin: 0.2rem 0 0.35rem; color: var(--muted); font-size: 0.85rem; font-style: italic; font-variant-numeric: tabular-nums; }
 .back-link { margin: 2rem 0 0; font-size: 0.9rem; }
 .back-link a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
@@ -231,8 +233,16 @@ window.GBLabels = {y1:"{{ i18n "year_singular" }}",yN:"{{ i18n "year_plural" }}"
 window.GBRenderAges = function () {
   var lab = window.GBLabels;
   var els = document.querySelectorAll(".age");
+  function parseDate(value) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || "");
+    if (!m) return new Date(value);
+    return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  }
+  function dayNumber(date) {
+    return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+  }
   function diff(s, e) {
-    var a = new Date(s), n = e ? new Date(e) : new Date();
+    var a = parseDate(s), n = e ? parseDate(e) : new Date();
     var y = n.getFullYear() - a.getFullYear();
     var m = n.getMonth() - a.getMonth();
     var d = n.getDate() - a.getDate();
@@ -240,9 +250,13 @@ window.GBRenderAges = function () {
     if (m < 0) { y -= 1; m += 12; }
     return [y, m, d];
   }
+  function elapsedDays(s, e) {
+    return dayNumber(e ? parseDate(e) : new Date()) - dayNumber(parseDate(s));
+  }
   function p(n, sg, pl) { return n + " " + (n === 1 ? sg : pl); }
   for (var i = 0; i < els.length; i++) {
     var x = diff(els[i].dataset.startDate, els[i].dataset.endDate);
+    els[i].dataset.rankDays = elapsedDays(els[i].dataset.startDate, els[i].dataset.endDate);
     els[i].textContent = p(x[0], lab.y1, lab.yN) + ", " + p(x[1], lab.m1, lab.mN) + ", " + p(x[2], lab.d1, lab.dN);
   }
 };

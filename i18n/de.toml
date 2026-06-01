@@ -19,6 +19,12 @@ other = "Hinweis senden"
 [back_to_list]
 other = "Zurück zur Liste"
 
+[source_label]
+other = "Aktenlage:"
+
+[source_link]
+other = "Quelle."
+
 [city]
 other = "Berlin"
 

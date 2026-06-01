@@ -4,6 +4,7 @@ const TOKEN_RE = /^[a-f0-9-]{36}$/;
 export async function onRequestPost({ params, request, env }) {
   const slug = params.slug;
   if (!SLUG_RE.test(slug)) return json({ error: "invalid slug" }, 400);
+  if (!env.PETITIONS) return json({ error: "missing kv binding" }, 500);
 
   let body;
   try { body = await request.json(); }
@@ -15,14 +16,27 @@ export async function onRequestPost({ params, request, env }) {
   const tokenKey = `token:${token}`;
   const valid = await env.PETITIONS.get(tokenKey);
   if (!valid) return json({ error: "expired" }, 410);
+
+  const before = await getCount(env.PETITIONS, slug);
+  await env.PETITIONS.put(`sig:${slug}:${token}`, "1");
   await env.PETITIONS.delete(tokenKey);
+  const after = await getCount(env.PETITIONS, slug);
 
-  const countKey = `count:${slug}`;
-  const raw = await env.PETITIONS.get(countKey);
-  const next = (raw ? Number(raw) || 0 : 0) + 1;
-  await env.PETITIONS.put(countKey, String(next));
+  return json({ slug, count: Math.max(after, before + 1) });
+}
 
-  return json({ slug, count: next });
+async function getCount(kv, slug) {
+  const rawBase = await kv.get(`count:${slug}`);
+  const base = rawBase ? Number(rawBase) || 0 : 0;
+  let cursor;
+  let signatures = 0;
+  do {
+    const page = await kv.list({ prefix: `sig:${slug}:`, cursor });
+    signatures += page.keys.length;
+    cursor = page.cursor;
+    if (page.list_complete) break;
+  } while (cursor);
+  return base + signatures;
 }
 
 function json(data, status = 200) {

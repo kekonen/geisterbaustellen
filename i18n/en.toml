@@ -19,6 +19,12 @@ other = "Send a tip"
 [back_to_list]
 other = "Back to list"
 
+[source_label]
+other = "Record:"
+
+[source_link]
+other = "Source."
+
 [city]
 other = "Berlin"
 
