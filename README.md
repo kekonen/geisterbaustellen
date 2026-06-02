@@ -26,3 +26,5 @@ Einmalig:
 3. Im Pages-Projekt das KV-Binding `PETITIONS` setzen.
 
 Lokal mit Functions: `hugo --minify && npx wrangler pages dev public`.
+
+<3
