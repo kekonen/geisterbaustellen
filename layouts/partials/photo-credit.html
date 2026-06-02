@@ -1,0 +1,15 @@
+{{- $credit := .Params.photo_credit -}}
+{{- $license := .Params.photo_license -}}
+{{- $changes := .Params.photo_changes -}}
+{{- if or $credit $license $changes }}
+<figcaption class="photo-credit">
+{{- with $credit -}}
+{{- with $.Params.photo_source_url }}<a href="{{ . }}">{{ $credit }}</a>{{ else }}{{ $credit }}{{ end -}}
+{{- end -}}
+{{- with $license -}}
+{{- if $credit }} &middot; {{ end -}}
+{{- with $.Params.photo_license_url }}<a href="{{ . }}" rel="license">{{ $license }}</a>{{ else }}{{ $license }}{{ end -}}
+{{- end -}}
+{{- with $changes }}{{ if or $credit $license }} &middot; {{ end }}{{ . }}{{ end -}}
+</figcaption>
+{{- end -}}

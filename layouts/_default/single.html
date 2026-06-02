@@ -19,6 +19,7 @@
 <figure class="photo-wrap{{ if $.Params.ended_date }} is-archived{{ end }}">
 <img class="photo" src="/photos/{{ . }}" alt="{{ $.Title }}" loading="lazy">
 <span class="live-badge" aria-hidden="true">{{ if $.Params.ended_date }}ARCHIV{{ else }}<span class="live-dot"></span>LIVE{{ end }}</span>
+{{ partial "photo-credit.html" $ }}
 </figure>
 {{- end }}
 {{- with .Content }}
