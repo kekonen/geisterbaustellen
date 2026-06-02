@@ -16,9 +16,9 @@
 <p class="note">{{ . }}</p>
 {{- end }}
 {{- with .Params.photo }}
-<figure class="photo-wrap{{ if $.Params.ended_date }} is-archived{{ end }}">
+<figure class="photo-wrap{{ if $.Params.ended_date }} is-deceased{{ end }}">
 <img class="photo" src="/photos/{{ . }}" alt="{{ $.Title }}" loading="lazy">
-<span class="live-badge" aria-hidden="true">{{ if $.Params.ended_date }}ARCHIV{{ else }}<span class="live-dot"></span>LIVE{{ end }}</span>
+<span class="live-badge" aria-hidden="true">{{ if $.Params.ended_date }}{{ i18n "status_dead" }}{{ else }}<span class="live-dot"></span>{{ i18n "status_live" }}{{ end }}</span>
 {{ partial "photo-credit.html" $ }}
 </figure>
 {{- end }}

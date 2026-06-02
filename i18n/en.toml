@@ -25,6 +25,12 @@ other = "Record:"
 [source_link]
 other = "Source."
 
+[status_live]
+other = "LIVE"
+
+[status_dead]
+other = "† DECEASED"
+
 [city]
 other = "Berlin"
 

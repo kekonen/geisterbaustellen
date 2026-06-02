@@ -25,6 +25,12 @@ other = "Aktenlage:"
 [source_link]
 other = "Quelle."
 
+[status_live]
+other = "LIVE"
+
+[status_dead]
+other = "† VERSTORBEN"
+
 [city]
 other = "Berlin"
 
