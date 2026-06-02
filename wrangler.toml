@@ -8,4 +8,4 @@ pages_build_output_dir = "public"
 # under Settings -> Functions -> KV namespace bindings (binding name: PETITIONS).
 [[kv_namespaces]]
 binding = "PETITIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "1cf432ad08f849e3bbbf787da01cd0b5"
