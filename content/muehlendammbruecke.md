@@ -7,5 +7,5 @@ photo: "muehlendammbruecke.webp"
 lat: 52.5150863
 lon: 13.4069744
 source_url: "https://www.berlin.de/sen/uvk/presse/pressemitteilungen/2024/pressemitteilung.1465779.php"
-source_note: "Senatsverwaltung: provisorische Kabeltrasse seit Juni 2024; Sperrung des südöstlichen Überbaus ab 15.07.2024."
+record_note: "Vor-Ort-Foto vom 02.06.2026 belegt den aktuellen Bauzustand; Senatsverwaltung: provisorische Kabeltrasse seit Juni 2024; Sperrung des südöstlichen Überbaus ab 15.07.2024."
 ---

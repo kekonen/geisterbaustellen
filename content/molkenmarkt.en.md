@@ -7,5 +7,5 @@ photo: "molkenmarkt.webp"
 lat: 52.5167422
 lon: 13.4095495
 source_url: "https://molkenmarkt.berlin.de/"
-source_note: "Molkenmarkt project site: large-scale archaeological excavations began in 2019."
+record_note: "On-site photo from 2 June 2026 documents the current construction state; Molkenmarkt project site: large-scale archaeological excavations began in 2019."
 ---

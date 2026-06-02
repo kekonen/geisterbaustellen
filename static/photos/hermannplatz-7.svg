@@ -6,6 +6,6 @@
     </pattern>
   </defs>
   <rect width="800" height="500" fill="#dcd7cf"/>
-  <text x="400" y="260" font-family="Georgia, serif" font-size="40" font-weight="700" text-anchor="middle" fill="#1a1a1a">Hermannplatz 7</text>
+  <text x="400" y="260" font-family="Georgia, serif" font-size="38" font-weight="700" text-anchor="middle" fill="#1a1a1a">Hermannplatz I/2</text>
   <rect x="0" y="460" width="800" height="40" fill="url(#bz)"/>
 </svg>

@@ -7,5 +7,5 @@ photo: "schlossplatz-3.webp"
 lat: 52.5160087
 lon: 13.4003501
 source_url: "https://www.entwicklungsstadt.de/einheitswippe-in-berlin-neuer-zeitplan-steht/"
-source_note: "ENTWICKLUNGSSTADT 2026: Baustelle der Einheitswippe, Baubeginn Mai 2020, Weiterbau offen."
+record_note: "Vor-Ort-Foto vom 02.06.2026 belegt den aktuellen Bauzustand; ENTWICKLUNGSSTADT 2026: Baustelle der Einheitswippe, Baubeginn Mai 2020, Weiterbau offen."
 ---

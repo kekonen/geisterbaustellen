@@ -29,7 +29,7 @@ other = "Source."
 other = "Berlin"
 
 [mail_subject_encoded]
-other = "New%20Geisterbaustelle"
+other = "Geisterbaustellen%3A%20New%20Geisterbaustelle"
 
 [mail_body_encoded]
 other = "Address%3A%20%0AStart%20date%3A%20%0APhoto%3A%20%0ANote%3A%20"

@@ -10,7 +10,7 @@
 {{- end }}
 <p class="age" data-start-date="{{ .Params.start_date }}"{{ with .Params.ended_date }} data-end-date="{{ . }}"{{ end }}>{{ i18n "observed_since" }} {{ .Params.start_date }}.</p>
 {{- with .Params.ended_date }}
-<p class="death">† {{ i18n "deceased_on" }} {{ . }}.</p>
+<p class="death">† {{ with $.Params.ended_label }}{{ . }}{{ else }}{{ i18n "deceased_on" }} {{ . }}{{ end }}.</p>
 {{- end }}
 {{- with .Params.note }}
 <p class="note">{{ . }}</p>
@@ -25,9 +25,10 @@
 {{- with .Content }}
 <div class="entry-content">{{ . }}</div>
 {{- end }}
-{{- if or .Params.source_url .Params.source_note }}
+{{- $recordNote := or .Params.record_note .Params.source_note -}}
+{{- if or .Params.source_url $recordNote }}
 <p class="source-note">
-{{ i18n "source_label" }}{{ with .Params.source_url }} <a href="{{ . }}">{{ i18n "source_link" }}</a>{{ end }}{{ with .Params.source_note }} {{ . }}{{ end }}
+{{ i18n "source_label" }}{{ with .Params.source_url }} <a href="{{ . }}">{{ i18n "source_link" }}</a>{{ end }}{{ with $recordNote }} {{ . }}{{ end }}
 </p>
 {{- end }}
 </article>

@@ -7,5 +7,5 @@ photo: "ostendstrasse-1-14.svg"
 lat: 52.4567817
 lon: 13.5296381
 source_url: "https://www.entwicklungsstadt.de/berlins-stillstehende-baustellen-von-monarch-tower-bis-steglitzer-kreisel/"
-source_note: "ENTWICKLUNGSSTADT 2026: Behrens-Ufer, Baustart 2023, eingerüstet und ohne sichtbare Aktivität."
+record_note: "ENTWICKLUNGSSTADT 2026: Behrens-Ufer, Baustart 2023, eingerüstet und ohne sichtbare Aktivität."
 ---

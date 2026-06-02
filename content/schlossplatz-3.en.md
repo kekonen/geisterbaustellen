@@ -7,5 +7,5 @@ photo: "schlossplatz-3.webp"
 lat: 52.5160087
 lon: 13.4003501
 source_url: "https://www.entwicklungsstadt.de/einheitswippe-in-berlin-neuer-zeitplan-steht/"
-source_note: "ENTWICKLUNGSSTADT 2026: Unity seesaw site, construction began May 2020, continuation open."
+record_note: "On-site photo from 2 June 2026 documents the current construction state; ENTWICKLUNGSSTADT 2026: Unity seesaw site, construction began May 2020, continuation open."
 ---

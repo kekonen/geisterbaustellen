@@ -27,7 +27,7 @@
 {{- end }}
 <p class="age" data-start-date="{{ $p.Params.start_date }}"{{ with $p.Params.ended_date }} data-end-date="{{ . }}"{{ end }}>{{ i18n "observed_since" }} {{ $p.Params.start_date }}.</p>
 {{- with $p.Params.ended_date }}
-<p class="death">† {{ i18n "deceased_on" }} {{ . }}.</p>
+<p class="death">† {{ with $p.Params.ended_label }}{{ . }}{{ else }}{{ i18n "deceased_on" }} {{ . }}{{ end }}.</p>
 {{- end }}
 {{- with $p.Params.note }}
 <p class="note">{{ . }}</p>

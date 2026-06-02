@@ -4,6 +4,7 @@ postcode: "12043"
 start_date: "2017-09-15"
 assembly_date: "2017-06-15"
 ended_date: "2025-04-01"
+ended_label: "archived: use documented from April 2025"
 note: "Former department store in event use. Scaffolding status: archival."
 photo: "karl-marx-strasse-92.webp"
 photo_credit: "Photo: Neuköllner / Wikimedia Commons"
@@ -14,5 +15,5 @@ photo_changes: "cropped and converted to WebP"
 lat: 52.4808
 lon: 13.4367
 source_url: "https://www.culterim.de/en/space/berlin-cank"
-source_note: "Culterim: two floors of the former C&A department store were converted into studio and exhibition spaces; use from April 2025."
+record_note: "Culterim: two floors of the former C&A department store were converted into studio and exhibition spaces; CANK address Karl-Marx-Straße 95, use from April 2025."
 ---
