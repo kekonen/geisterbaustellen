@@ -28,3 +28,4 @@ Einmalig:
 Lokal mit Functions: `hugo --minify && npx wrangler pages dev public`.
 
 <3
+<3
